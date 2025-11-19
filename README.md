@@ -19,12 +19,6 @@ This Terraform configuration deploys your S&P 500 CLI application on an AWS EC2 
 
 ### 1. Configure Your Variables
 
-Copy the example variables file and edit it:
-
-```bash
-cp terraform.tfvars.example terraform.tfvars
-```
-
 Edit `terraform.tfvars` and set:
 - `aws_region` - Your preferred AWS region (default: us-east-1)
 - `instance_type` - Instance size (default: t2.micro)
@@ -85,25 +79,15 @@ terraform output
 
 ### 7. Connect to Your Instance
 
-```bash
-ssh -i /path/to/your-key.pem ec2-user@$(terraform output -raw public_ip)
-```
+In the AWS Management Console, connect to your EC2 instance using EC2 Instance Connect.
 
 ### 8. Verify Installation
 
-Once connected, check that everything deployed correctly:
-
-```bash
-# Check the user data log
-sudo cat /var/log/user-data.log
-
-# Verify the repo was cloned
-ls -la /home/ec2-user/sp500_cli/
-
-# Test your app
-cd /home/ec2-user/sp500_cli/
-python3 your_script.py
-```
+1. Once connected, check that everything deployed correctly.
+1. `ls` should show sp500-cli directory.
+1. Navigate into the directory: `cd sp500-cli`
+1. Run the application: `python3 main.py`
+1. You should see the rolling year average of the S&P 500 printed in the terminal.
 
 ## Cleanup
 
