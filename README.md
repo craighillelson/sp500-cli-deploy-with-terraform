@@ -6,7 +6,6 @@ This Terraform configuration deploys your S&P 500 CLI application on an AWS EC2 
 
 1. **Terraform installed** - [Download here](https://www.terraform.io/downloads)
 2. **AWS CLI configured** with credentials - Run `aws configure`
-3. **An EC2 key pair** created in your AWS account
 
 ## Files Included
 
