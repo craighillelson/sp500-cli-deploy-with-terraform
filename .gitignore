@@ -1,0 +1,5 @@
+terraform.tfstate
+terraform.tfstate.backup
+.terraform.lock.hcl
+output.txt
+test.tfplan
