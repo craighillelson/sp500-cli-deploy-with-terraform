@@ -7,6 +7,15 @@ terraform {
   }
 }
 
+# Get your current public IP
+data "http" "my_ip" {
+  url = "https://ipv4.icanhazip.com"
+}
+
+locals {
+  my_ip = "${chomp(data.http.my_ip.response_body)}/32"
+}
+
 provider "aws" {
   region = var.aws_region
 }
@@ -21,7 +30,7 @@ resource "aws_security_group" "sp500_sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]  # Restrict this to your IP in production!
+    cidr_blocks = [local.my_ip] # restricts to your IP
   }
 
   # HTTP access (if running Flask web server)
@@ -49,6 +58,7 @@ resource "aws_security_group" "sp500_sg" {
 resource "aws_instance" "sp500_app" {
   ami           = var.ami_id
   instance_type = var.instance_type
+  key_name      = var.key_name
 
   vpc_security_group_ids = [aws_security_group.sp500_sg.id]
 

@@ -13,6 +13,7 @@ This Terraform configuration deploys your S&P 500 CLI application on an AWS EC2 
 - `variables.tf` - Variable definitions
 - `outputs.tf` - Output values (instance ID, IP, DNS)
 - `user-data.sh` - Bash script that runs on instance launch
+- `terraform.tfvars` - Your variable values 
 
 ## Setup Instructions
 
@@ -21,6 +22,7 @@ This Terraform configuration deploys your S&P 500 CLI application on an AWS EC2 
 Edit `terraform.tfvars` and set:
 - `aws_region` - Your preferred AWS region (default: us-east-1)
 - `instance_type` - Instance size (default: t2.micro)
+- `key_name` - Your existing EC2 key pair name for SSH access
 
 ### 2. Verify the AMI ID
 
@@ -78,7 +80,7 @@ terraform output
 
 ### 7. Connect to Your Instance
 
-In the AWS Management Console, connect to your EC2 instance using EC2 Instance Connect.
+Connect to your EC2 instance via SSH or by using EC2 Instance Connect.
 
 ### 8. Verify Installation
 
