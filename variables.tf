@@ -17,3 +17,8 @@ variable "key_name" {
   description = "SSH key pair name"
   type        = string
 }
+
+variable "alarm_email" {
+  description = "Email address for CloudWatch alarms"
+  type        = string
+}

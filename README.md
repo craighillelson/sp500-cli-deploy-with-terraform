@@ -23,6 +23,7 @@ Edit `terraform.tfvars` and set:
 - `aws_region` - Your preferred AWS region (default: us-east-1)
 - `instance_type` - Instance size (default: t2.micro)
 - `key_name` - Your existing EC2 key pair name for SSH access
+- `alarm_email` - Your email for CloudWatch alarms
 
 ### 2. Verify the AMI ID
 
@@ -89,6 +90,10 @@ Connect to your EC2 instance via SSH or by using EC2 Instance Connect.
 1. Navigate into the directory: `cd sp500-cli`
 1. Run the application: `python3 main.py`
 1. You should see the rolling year average of the S&P 500 printed in the terminal.
+
+#### 9. Confirm CloudWatch Alarm Subscription
+
+You should receive an email at the address you provided in `alarm_email`. Follow the instructions in the email to confirm your subscription to the CloudWatch alarm notifications.
 
 ## Cleanup
 
@@ -163,9 +168,4 @@ Edit `user-data.sh` to add more installation steps, like:
 
 ## Next Steps
 
-Consider adding:
-- Elastic IP for a static IP address
-- Auto Scaling Group for high availability
-- Application Load Balancer if running a web server
-- CloudWatch alarms for monitoring
-- S3 backend for Terraform state storage
+Consider adding: S3 backend for Terraform state storage

@@ -68,3 +68,32 @@ resource "aws_instance" "sp500_app" {
     Name = "sp500-cli-app"
   }
 }
+
+# SNS topic for alarm notifications (optional but recommended)
+resource "aws_sns_topic" "sp500_alarms" {
+  name = "sp500-alarms"
+}
+
+resource "aws_sns_topic_subscription" "alarm_email" {
+  topic_arn = aws_sns_topic.sp500_alarms.arn
+  protocol  = "email"
+  endpoint  = var.alarm_email # Add this variable
+}
+
+# CPU Alarm
+resource "aws_cloudwatch_metric_alarm" "cpu_high" {
+  alarm_name          = "sp500-high-cpu"
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = 2
+  metric_name         = "CPUUtilization"
+  namespace           = "AWS/EC2"
+  period              = 300 # 5 minutes
+  statistic           = "Average"
+  threshold           = 80 # Alert if CPU > 80%
+  alarm_description   = "Alert when CPU exceeds 80%"
+  alarm_actions       = [aws_sns_topic.sp500_alarms.arn]
+
+  dimensions = {
+    InstanceId = aws_instance.sp500_app.id
+  }
+}
